@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icchon <icchon@student.42.fr>              #+#  +:+       +#+        */
+/*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-25 06:08:59 by icchon            #+#    #+#             */
-/*   Updated: 2024-10-25 06:08:59 by icchon           ###   ########.fr       */
+/*   Created: 2024/10/25 06:08:59 by icchon            #+#    #+#             */
+/*   Updated: 2024/11/01 12:43:04 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static int	ft_min(int x, int y)
+{
+	if (x < y)
+		return (x);
+	return (y);
+}
 
 char	*get_next_line(int fd)
 {
@@ -19,52 +26,44 @@ char	*get_next_line(int fd)
 	static char		*ptr;
 	char			*res;
 	int				i;
-	int				j;
 
+	// printf("bytes_read ; %ld\n", bytes_read);
 	if (!buff[0])
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
+		printf("byte_read ; %zd\n", bytes_read);
 		ptr = buff;
 	}
-	if (bytes_read <= 0)
+	if (bytes_read <= 0 || *ptr == '\0')
 	{
 		return (NULL);
 	}
 	i = 0;
-	while (ptr[i] != '\n')
+	while (ptr[i])
 	{
-		i++;
+		if (ptr[i++] == '\n')
+			break ;
 	}
-	i++;
-	res = (char *)malloc(sizeof(char) * (i + 1));
+	if (ptr[i] == '\0')
+		i++;
+	res = (char *)malloc(sizeof(char) * ft_min(i + 1, bytes_read + 1));
+	if (res == NULL)
+		return (res);
 	i = 0;
-	while (*ptr != '\n' && bytes_read > 0)
+	while (bytes_read > 0 && *ptr != '\0')
 	{
+		if (*ptr == '\n')
+		{
+			res[i] = *ptr;
+			ptr++;
+			i++;
+			break ;
+		}
 		res[i] = *ptr;
+		ptr++;
 		i++;
-		*ptr++;
-		bytes_read--;
 	}
-	res[i] = *ptr;
-	*ptr++;
-	bytes_read--;
-	res[i + 1] = '\0';
+	if (*ptr == '\0' || bytes_read <= 0)
+		res[i] = '\0';
 	return (res);
-}
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("sample.txt", O_RDONLY);
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	close(fd);
-	return (0);
 }

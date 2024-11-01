@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: icchon <icchon@student.42.fr>              #+#  +:+       +#+        */
+/*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-25 06:05:51 by icchon            #+#    #+#             */
-/*   Updated: 2024-10-25 06:05:51 by icchon           ###   ########.fr       */
+/*   Created: 2024/10/25 06:05:51 by icchon            #+#    #+#             */
+/*   Updated: 2024/11/01 08:03:57 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
+
+char	*get_next_line(int fd);
 
 #endif
