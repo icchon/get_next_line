@@ -6,10 +6,6 @@ BONUS_SRCS = get_next_line_bonus.c get_next_line_utils_bonus.c main.c
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
-ifdef WITH_BONUS
-OBJS += $(BONUS_OBJS)
-endif
-
 ifndef BUFFER_SIZE
 BUFFER_SIZE=1000
 endif
@@ -29,7 +25,7 @@ fclean: clean
 
 re: fclean all
 
-bonus:
-	@make WITH_BONUS=1 all
+bonus: $(BONUS_OBJS)
+	$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) $(BONUS_SRCS) -o $(NAME)
 
 .PHONY: all clean fclean re bonus 
