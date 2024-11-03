@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:38:06 by kaisobe           #+#    #+#             */
-/*   Updated: 2024/11/02 19:31:18 by kaisobe          ###   ########.fr       */
+/*   Updated: 2024/11/03 11:50:07 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*mem(void *s, int c, size_t n)
 {
 	size_t	i;
 	char	*ptr;
@@ -51,12 +51,9 @@ char	*ft_safely_strjoin(char *s1, char *s2, int to_free_s1, int to_free_s2)
 	res = (char *)malloc(sizeof(char) * (length + 1));
 	if (res == NULL)
 		return (NULL);
-	i = 0;
-	while (i < ft_strlen(s1))
-	{
-		res[i] = s1[i];
-		i++;
-	}
+	i = -1;
+	while (++i < ft_strlen(s1))
+		res[i] = (s1)[i];
 	while (i < length)
 	{
 		res[i] = s2[i - ft_strlen(s1)];

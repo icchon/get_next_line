@@ -6,7 +6,7 @@
 /*   By: kaisobe <kaisobe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 06:05:51 by icchon            #+#    #+#             */
-/*   Updated: 2024/11/02 12:28:06 by kaisobe          ###   ########.fr       */
+/*   Updated: 2024/11/03 10:42:38 by kaisobe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
+# endif
+
+# ifdef BUFFER_SIZE
+#  if BUFFER_SIZE > 1000000 || BUFFER_SIZE < 0
+#   error "Invalid BUFFER_SIZE"
+#  endif
 # endif
 
 # include <fcntl.h>
